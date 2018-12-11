@@ -1,0 +1,7 @@
+version: '3.4'
+services:
+  lerna:
+    image: pickmyload/lerna:68b035c97be8fb192235bae2dfb588c5c8451e4e
+    entrypoint: /bin/sh
+    volumes:
+      - ./:/working_dir

@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+      "rootDir": "src",
+      "baseUrl": ".",
+      "module": "commonjs",
+      "target": "es6",
+      "sourceMap": true,
+      "outDir": "./dist",
+      "lib": ["es2017", "dom", "esnext.asynciterable"],
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "noImplicitAny": false,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "declaration": true,
+      "noUnusedLocals": true,
+      "typeRoots": [
+        "node_modules/@types"
+      ],
+      "types": [
+      ]
+    },
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+      "_meta",
+      "e2e",
+      "dist"
+    ]
+  }

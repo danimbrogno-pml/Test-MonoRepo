@@ -1,0 +1,10 @@
+{
+  "name": "root",
+  "private": true,
+  "dependencies": {
+    "@pmlfreighttech/freightsmb-frontend": "^2.1.7"
+  },
+  "devDependencies": {
+    "lerna": "^3.5.1"
+  }
+}
