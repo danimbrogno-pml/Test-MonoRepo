@@ -1,3 +1,3 @@
 import foo from '@freightbpi/testing-b';
 
-console.log(`Notice: ${foo()}`);
+console.log(`My address: ${foo()}`);
