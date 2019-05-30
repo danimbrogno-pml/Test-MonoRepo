@@ -35,24 +35,6 @@ jobs:
           root: ~/
           paths: 
             - repo
-  lint:
-    executor: lerna
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cd ~/repo && lerna run lint
-  unit-test:
-    executor: lerna
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cd ~/repo && lerna run test
-  e2e-test:
-    executor: base
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cd ~/repo && docker-compose -f root.yml -f docker/backend.yml -f docker/backend.e2e.yml -f docker/backend.e2e.run.yml run --rm backend
   publishRelease:
     executor: lerna
     steps:
@@ -64,13 +46,13 @@ jobs:
           root: ~/
           paths: 
             - repo
-  publishNext:
+  publishCanary:
     executor: lerna
     steps:
       - attach_workspace:
           at: ~/
-      # - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
-      - run: "cd ~/repo && lerna publish --dist-tag next --yes --skip-git"
+      - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
+      - run: "cd ~/repo && lerna publish --canary"
       - persist_to_workspace:
           root: ~/
           paths: 
