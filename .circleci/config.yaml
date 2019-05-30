@@ -1,0 +1,172 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+executors:
+  lerna:
+    docker:
+      - image: pickmyload/circleci-lerna:latest
+        user: node
+        auth:
+          username: danimbrognopml  # can specify string literal values
+          password: $DOCKERHUB_PASSWORD  # or project environment variable reference
+  base:
+    machine:
+      image: circleci/classic:201808-01
+jobs:
+  checkout:
+    executor: lerna
+    steps:
+      - checkout:
+          path: ~/repo
+      - persist_to_workspace:
+          root: ~/
+          paths: 
+            - repo
+            - .ssh/known_hosts
+  bootstrap:
+    executor: lerna
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cd ~/repo && lerna bootstrap --ci && lerna run build
+      - persist_to_workspace:
+          root: ~/
+          paths: 
+            - repo
+  lint:
+    executor: lerna
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cd ~/repo && lerna run lint
+  unit-test:
+    executor: lerna
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cd ~/repo && lerna run test
+  e2e-test:
+    executor: base
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cd ~/repo && docker-compose -f root.yml -f docker/backend.yml -f docker/backend.e2e.yml -f docker/backend.e2e.run.yml run --rm backend
+  publishRelease:
+    executor: lerna
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
+      - run: "cd ~/repo && lerna publish --conventional-commits --yes --message=\"chore(release): publish release %v [skip ci]\""
+      - persist_to_workspace:
+          root: ~/
+          paths: 
+            - repo
+  publishNext:
+    executor: lerna
+    steps:
+      - attach_workspace:
+          at: ~/
+      # - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
+      - run: "cd ~/repo && lerna publish --dist-tag next --yes --skip-git"
+      - persist_to_workspace:
+          root: ~/
+          paths: 
+            - repo
+  buildImage:
+    executor: base
+    parameters:
+      image:
+        description: "What image do you want to build?"
+        default: "frontend"
+        type: enum
+        enum: ["frontend", "backend", "documents"]
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: cd ~/repo && ./build/build-container.sh << parameters.image >>
+  deploy:
+    executor: base
+    parameters:
+      environment:
+        description: "Where should we deploy?"
+        default: "stage"
+        type: enum
+        enum: ["stage", "demo", "prod"]
+    steps:
+      - attach_workspace:
+          at: ~/
+      - add_ssh_keys:
+          fingerprints:
+            - "37:af:5d:dc:b6:c6:2f:02:70:ba:c7:68:19:a1:83:4a"
+            - "45:1c:46:90:e8:09:e3:24:23:03:96:26:14:59:94:24"
+            - "4d:b6:9f:cf:0f:9e:a3:bb:c0:1f:96:26:80:a9:ac:c4"
+      - run: cd ~/repo && ./deploy/deploy.sh << parameters.environment >>
+workflows:
+  version: 2
+  run_tests:
+    jobs:
+      - checkout:
+          filters:
+            branches:
+              ignore:
+                - master
+                - next
+      - bootstrap:
+          requires:
+            - checkout
+      - lint:
+          requires:
+            - bootstrap
+      - unit-test:
+          requires:
+            - bootstrap
+      - e2e-test:
+          requires:
+            - bootstrap
+  deploy_staging:
+    jobs:
+      - checkout:
+          filters:
+            branches:
+              only: next
+      - bootstrap:
+          requires:
+            - checkout
+      - publishNext:
+          requires:
+            - bootstrap
+      - buildImage:
+          image: frontend
+          requires:
+            - publishRelease
+      - buildImage:
+          image: backend
+          requires:
+            - publishRelease
+      - buildImage:
+          image: documents
+          requires:
+            - publishRelease
+      - deploy:
+          environment: stage
+          requires:
+            - build-frontend-image
+            - build-backend-image
+            - build-documents-image
+  deploy_demo_and_prod:
+    jobs:
+      - checkout:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          environment: demo
+          requires:
+            - checkout
+      - deploy:
+          environment: prod
+          requires:
+            - checkout
