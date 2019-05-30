@@ -73,8 +73,8 @@ jobs:
       isCanary:
         description: "Do you want to do a canary build?"
         type: enum
-        default: 0
-        enum: [0, 1]
+        default: "0"
+        enum: ["0", "1"]
     steps:
       - attach_workspace:
           at: ~/
@@ -107,12 +107,12 @@ workflows:
             - bootstrap
       - buildImage:
           image: a
-          isCanary: 1
+          isCanary: "1"
           requires:
             - publishCanary
       - buildImage:
           image: b
-          isCanary: 1
+          isCanary: "1"
           requires:
             - publishCanary
   # deploy_demo_and_prod:
