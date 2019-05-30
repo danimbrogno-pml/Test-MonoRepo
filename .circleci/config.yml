@@ -62,9 +62,9 @@ jobs:
     parameters:
       image:
         description: "What image do you want to build?"
-        default: "frontend"
+        default: "A"
         type: enum
-        enum: ["frontend", "backend", "documents"]
+        enum: ["A", "B"]
     steps:
       - attach_workspace:
           at: ~/
