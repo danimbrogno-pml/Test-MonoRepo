@@ -107,12 +107,12 @@ workflows:
             - bootstrap
       - buildImage:
           image: a
-          isCanary: true
+          isCanary: 1
           requires:
             - publishCanary
       - buildImage:
           image: b
-          isCanary: true
+          isCanary: 1
           requires:
             - publishCanary
   # deploy_demo_and_prod:
