@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1-alpha.3](https://github.com/danimbrogno-pml/Test-MonoRepo/compare/v1.1.1-alpha.2...v1.1.1-alpha.3) (2019-05-30)
+
+
+### Bug Fixes
+
+* add correct var to docker build command ([bcdc2ef](https://github.com/danimbrogno-pml/Test-MonoRepo/commit/bcdc2ef))
+
+
+
+
+
 ## [1.1.1-alpha.2](https://github.com/danimbrogno-pml/Test-MonoRepo/compare/v1.1.1-alpha.1...v1.1.1-alpha.2) (2019-05-30)
 
 
