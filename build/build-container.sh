@@ -14,8 +14,9 @@ PACKAGE_VERSION=$2
 
 cd ./packages/$PACKAGE
 
-#PACKAGE_VERSION="$(awk -F\" '/"version":/ {print $4}' package.json)"
+PACKAGE_VERSION_SPECIFIC="$(awk -F\" '/"version":/ {print $4}' package.json)"
 
+echo "THE SPECIFIC PACKAGE VERSION IS $PACKAGE_VERSION_SPECIFIC"
 echo "THE PACKAGE IS $PACKAGE"
 echo "THE PACKAGE VERSION IS $PACKAGE_VERSION"
 
