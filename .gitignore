@@ -3,3 +3,5 @@ node_modules
 dist
 .env
 yarn-error.log
+.ssh
+lerna-debug.log
