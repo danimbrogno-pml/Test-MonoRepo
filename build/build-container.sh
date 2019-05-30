@@ -10,40 +10,39 @@ set -o errexit
 set -o pipefail
 
 PACKAGE=$1
-PACKAGE_VERSION=$2
+PACKAGE_DIST_TAG=$2
 
 cd ./packages/$PACKAGE
 
-PACKAGE_VERSION_SPECIFIC="$(awk -F\" '/"version":/ {print $4}' package.json)"
+PACKAGE_TAG="$(awk -F\" '/"version":/ {print $4}' package.json)"
 
-echo "THE SPECIFIC PACKAGE VERSION IS $PACKAGE_VERSION_SPECIFIC"
 echo "THE PACKAGE IS $PACKAGE"
-echo "THE PACKAGE VERSION IS $PACKAGE_VERSION"
+echo "THE PACKAGE VERSION IS $PACKAGE_TAG"
+echo "THE PACKAGE DIST TAG IS $PACKAGE_DIST_TAG"
 
-IMAGE_COMMIT_TAG="pickmyload/test-$PACKAGE:$CIRCLE_SHA1"
-IMAGE_TAG="pickmyload/test-$PACKAGE:$PACKAGE_VERSION"
+IMAGE_TAG="pickmyload/test-$PACKAGE:$PACKAGE_TAG"
+IMAGE_DIST_TAG="pickmyload/test-$PACKAGE:$PACKAGE_DIST_TAG"
 
-echo "THE IMAGE TAG IS $IMAGE_TAG"
-echo "THE IMAGE COMMIT TAG IS $IMAGE_COMMIT_TAG"
+echo "THE IMAGE TAG IS $IMAGE_DIST_TAG"
+echo "THE IMAGE COMMIT TAG IS $IMAGE_TAG"
 
 echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_LOGIN --password-stdin
 
-docker build --build-arg PACKAGE_VERSION=$PACKAGE_VERSION --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_COMMIT_TAG -t $IMAGE_TAG .
-
-docker push $IMAGE_COMMIT_TAG
-docker push $IMAGE_TAG
-
 
 # If container already exists with this tag
-# if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_TAG >/dev/null; then
+if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_TAG >/dev/null; then
     
-#   echo "skipping build of docker image $1$PACKAGE_VERSION. It already exists."
+  echo "skipping build of docker image $IMAGE_TAG. It already exists."
 
-# else
+else
     
-#   echo "building docker image $1$PACKAGE_VERSION"
+    echo "building docker image $IMAGE_TAG"
+    docker build --build-arg PACKAGE_TAG=$PACKAGE_TAG --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_TAG -t $IMAGE_DIST_TAG .
+
+    docker push $IMAGE_TAG
+    docker push $IMAGE_DIST_TAG
 
 
-# fi
+fi
 
 docker logout
