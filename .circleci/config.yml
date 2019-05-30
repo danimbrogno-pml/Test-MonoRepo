@@ -68,13 +68,16 @@ jobs:
     parameters:
       image:
         description: "What image do you want to build?"
-        default: "a"
         type: enum
         enum: ["a", "b"]
+      packageVersion:
+        description: "What packange version do you want to build?"
+        type: enum
+        enum: ["latest", "canary"]
     steps:
       - attach_workspace:
           at: ~/
-      - run: cd ~/repo && ./build/build-container.sh << parameters.image >>
+      - run: cd ~/repo && ./build/build-container.sh << parameters.image >> << parameters.packageVersion >>
   deploy:
     executor: base
     parameters:
@@ -103,10 +106,12 @@ workflows:
             - bootstrap
       - buildImage:
           image: a
+          packageVersion: canary
           requires:
             - publishCanary
       - buildImage:
           image: b
+          packageVersion: canary
           requires:
             - publishCanary
   # deploy_demo_and_prod:
