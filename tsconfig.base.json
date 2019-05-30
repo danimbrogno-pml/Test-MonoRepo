@@ -1,0 +1,12 @@
+{ 
+    "compilerOptions": {
+      "baseUrl": "./",
+      "paths": {
+        "@freightbpi/testing-*": ["./packages/*/src"]
+      }
+    },
+    "exclude": [
+      "./dist/**/*",
+      "node_modules"
+    ]
+  }
