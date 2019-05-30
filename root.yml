@@ -1,0 +1,2 @@
+# Include as first file in calls to docker-compose so that all paths in docker-compose files become relative to the repository root.
+version: '3.4'

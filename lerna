@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker-compose -f root.yml -f docker/tools/lerna.yml run --rm --entrypoint lerna lerna "$@"

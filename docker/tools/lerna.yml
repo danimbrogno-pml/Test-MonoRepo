@@ -1,0 +1,10 @@
+version: '3.4'
+services:
+  lerna:
+    image: pickmyload/lerna:c3dc59ae96a5d7a8b865a37b262e10cc7a47f6a6
+    user: node
+    environment:
+      NPM_TOKEN: ${NPM_TOKEN}
+    volumes:
+      - ./:/working_dir
+      - .ssh/:/home/node/.ssh

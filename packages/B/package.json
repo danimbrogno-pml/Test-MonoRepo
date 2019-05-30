@@ -1,5 +1,5 @@
 {
-  "name": "testing-b",
+  "name": "@freightbpi/testing-b",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -11,14 +11,16 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "start": "node ./dist/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "uuuid": "^3.5.1"
+    "faker": "^4.1.0"
   },
-  "peerDependencies": {
+  "devDependencies": {
+    "@types/faker": "^4.1.5",
     "typescript": "^3.2.2"
   }
 }
