@@ -13,7 +13,11 @@ cd ./packages/$1
 
 PACKAGE_VERSION="$(awk -F\" '/"version":/ {print $4}' package.json)"
 
+echo "THE PACKAGE VERSION IS $PACKAGE_VERSION"
+
 IMAGE_TAG="pickmyload/test-$1:next"
+
+echo "THE IMAGE TAG IS $IMAGE_TAG"
 
 echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_LOGIN --password-stdin
 

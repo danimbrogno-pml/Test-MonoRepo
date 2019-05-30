@@ -68,9 +68,9 @@ jobs:
     parameters:
       image:
         description: "What image do you want to build?"
-        default: "A"
+        default: "a"
         type: enum
-        enum: ["A", "B"]
+        enum: ["a", "b"]
     steps:
       - attach_workspace:
           at: ~/
@@ -102,11 +102,11 @@ workflows:
           requires:
             - bootstrap
       - buildImage:
-          image: A
+          image: a
           requires:
             - publishCanary
       - buildImage:
-          image: B
+          image: b
           requires:
             - publishCanary
   # deploy_demo_and_prod:
