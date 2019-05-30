@@ -20,25 +20,34 @@ echo "THE PACKAGE IS $PACKAGE"
 echo "THE PACKAGE VERSION IS $PACKAGE_VERSION"
 echo "THE PACKAGE DIST TAG IS $PACKAGE_DIST_TAG"
 
-IMAGE_TAG="pickmyload/test-$PACKAGE:$PACKAGE_VERSION"
-IMAGE_DIST_TAG="pickmyload/test-$PACKAGE:$PACKAGE_DIST_TAG"
+IMAGE_PACKAGE_VERSION_TAG="pickmyload/test-$PACKAGE:$PACKAGE_VERSION"
+IMAGE_CANARY_TAG="pickmyload/test-$PACKAGE:canary"
+IMAGE_COMMIT_TAG="pickmyload/test-$PACKAGE:$CIRCLE_SHA1"
 
-echo "THE IMAGE TAG IS $IMAGE_DIST_TAG"
-echo "THE IMAGE COMMIT TAG IS $IMAGE_TAG"
+echo "THE IMAGE TAG IS $IMAGE_CANARY_TAG"
+echo "THE IMAGE COMMIT TAG IS $IMAGE_PACKAGE_VERSION_TAG"
 
 deploy () {
     
-    echo "building docker image $IMAGE_TAG"
+    echo "building docker image $IMAGE_PACKAGE_VERSION_TAG"
 
-    docker build --build-arg PACKAGE_VERSION=$PACKAGE_VERSION --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_TAG -t $IMAGE_DIST_TAG .
+    docker build --build-arg PACKAGE_VERSION=$PACKAGE_VERSION --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_PACKAGE_VERSION_TAG -t $IMAGE_CANARY_TAG -t $IMAGE_COMMIT_TAG .
 
-    docker push $IMAGE_TAG
-    docker push $IMAGE_DIST_TAG
+    if [ "$IS_CANARY" -eq "1" ]; then
+        
+        docker push $IMAGE_CANARY_TAG
+        docker push $IMAGE_COMMIT_TAG
+
+    else
+
+        docker push $IMAGE_PACKAGE_VERSION_TAG
+
+    fi
 
 }
 
 testExists () {
-    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_TAG >/dev/null
+    DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_PACKAGE_VERSION_TAG >/dev/null
 }
 
 echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_LOGIN --password-stdin
@@ -50,7 +59,7 @@ if [ "$IS_CANARY" -eq "1" ]; then
 elif ! testExists ; then
     deploy
 else
-    echo "skipping build of docker image $IMAGE_TAG. It already exists."
+    echo "skipping build of docker image $IMAGE_PACKAGE_VERSION_TAG. It already exists."
 fi
 
 docker logout
