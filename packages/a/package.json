@@ -1,6 +1,6 @@
 {
   "name": "@freightbpi/testing-a",
-  "version": "0.0.2",
+  "version": "0.02",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -14,11 +14,12 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "@freightbpi/testing-b": "^0.0.2"
+    "@freightbpi/testing-b": "^0.02"
   },
   "devDependencies": {
     "typescript": "^3.2.2"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "989b6447f7eb0d160f4a67c3ed5b415ee05c89d9"
 }

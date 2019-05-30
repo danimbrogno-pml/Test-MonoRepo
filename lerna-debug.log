@@ -1,0 +1,53 @@
+0 silly argv { _: [ 'publish' ],
+0 silly argv   canary: true,
+0 silly argv   c: true,
+0 silly argv   composed: 'publish',
+0 silly argv   lernaVersion: '3.14.1',
+0 silly argv   '$0': '/usr/local/bin/lerna' }
+1 notice cli v3.14.1
+2 verbose rootPath /working_dir
+3 info canary enabled
+4 verbose session 941ad96828f326a7
+5 verbose user-agent lerna/3.14.1/node@v10.12.0+x64 (linux)
+6 verbose git-describe undefined => "989b644"
+7 silly git-describe parsed => {"refCount":"30","sha":"989b644","isDirty":false}
+8 silly hasTags
+9 verbose hasTags true
+10 silly git-describe.sync "989b644" => {"refCount":"30","sha":"989b644","isDirty":false}
+11 info Looking for changed packages since 989b644^..989b644
+12 silly checking diff packages/a
+13 silly found diff in packages/a/package.json
+14 verbose filtered diff [ 'packages/a/package.json' ]
+15 silly checking diff packages/b
+16 silly found diff in packages/b/package.json
+17 verbose filtered diff [ 'packages/b/package.json' ]
+18 verbose updated @freightbpi/testing-a
+19 verbose updated @freightbpi/testing-b
+20 verbose git-describe "v*.*.*" => "989b644"
+21 silly git-describe parsed => {"refCount":"30","sha":"989b644","isDirty":false}
+22 info publish Publishing packages to npm...
+23 info Verifying npm credentials
+24 verbose Retrieving npm user profile
+25 http fetch GET 200 https://registry.npmjs.org/-/npm/v1/user 1472ms
+26 silly npm profile get received {"tfa":false,"name":"freightbpi","email":"dan@pmlfreight.tech","email_verified":true,"created":"2017-12-19T14:40:32.005Z","updated":"2018-09-10T14:25:53.500Z","cidr_whitelist":null}
+27 silly npm profile get received {"username":"freightbpi"}
+28 silly verifyNpmPackageAccess
+29 http fetch GET 200 https://registry.npmjs.org/-/org/freightbpi/package?format=cli 449ms
+30 silly getCurrentSHA
+31 verbose getCurrentSHA 989b6447f7eb0d160f4a67c3ed5b415ee05c89d9
+32 silly lifecycle No script for "prepublish" in "root", continuing
+33 silly lifecycle No script for "prepare" in "root", continuing
+34 silly lifecycle No script for "prepublishOnly" in "root", continuing
+35 silly lifecycle No script for "prepack" in "root", continuing
+36 error Error: Invalid tag name "^null-alpha.29+989b644": Tags may not have any characters that encodeURIComponent encodes.
+36 error     at invalidTagName (/working_dir/node_modules/npm-package-arg/npa.js:87:15)
+36 error     at fromRegistry (/working_dir/node_modules/npm-package-arg/npa.js:290:13)
+36 error     at Function.resolve (/working_dir/node_modules/npm-package-arg/npa.js:77:12)
+36 error     at Object.keys.forEach.depName (/working_dir/node_modules/@lerna/package-graph/index.js:112:30)
+36 error     at Array.forEach (<anonymous>)
+36 error     at PackageGraph.forEach (/working_dir/node_modules/@lerna/package-graph/index.js:106:38)
+36 error     at Map.forEach (<anonymous>)
+36 error     at new PackageGraph (/working_dir/node_modules/@lerna/package-graph/index.js:95:10)
+36 error     at new QueryGraph (/working_dir/node_modules/@lerna/query-graph/query-graph.js:26:18)
+36 error     at runTopologically (/working_dir/node_modules/@lerna/run-topologically/run-topologically.js:33:17)
+36 error     at PublishCommand.topoMapPackages (/working_dir/node_modules/@lerna/publish/index.js:568:12)
