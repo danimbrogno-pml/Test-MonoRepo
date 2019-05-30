@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1-alpha.4](https://github.com/danimbrogno-pml/Test-MonoRepo/compare/v1.1.1-alpha.3...v1.1.1-alpha.4) (2019-05-30)
+
+
+### Bug Fixes
+
+* add state ([ec710dc](https://github.com/danimbrogno-pml/Test-MonoRepo/commit/ec710dc))
+* change code ([b4dd39b](https://github.com/danimbrogno-pml/Test-MonoRepo/commit/b4dd39b))
+* update message ([4f74f8d](https://github.com/danimbrogno-pml/Test-MonoRepo/commit/4f74f8d))
+
+
+
+
+
 ## [1.1.1-alpha.3](https://github.com/danimbrogno-pml/Test-MonoRepo/compare/v1.1.1-alpha.2...v1.1.1-alpha.3) (2019-05-30)
 
 
