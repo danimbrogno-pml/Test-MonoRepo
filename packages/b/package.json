@@ -1,6 +1,6 @@
 {
   "name": "@freightbpi/testing-b",
-  "version": "0.02",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -22,5 +22,5 @@
     "@types/faker": "^4.1.5",
     "typescript": "^3.2.2"
   },
-  "gitHead": "989b6447f7eb0d160f4a67c3ed5b415ee05c89d9"
+  "gitHead": "c00ee79476c918786135fd9c5a3265c86955798b"
 }
