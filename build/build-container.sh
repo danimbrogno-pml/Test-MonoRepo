@@ -14,13 +14,13 @@ PACKAGE_DIST_TAG=$2
 
 cd ./packages/$PACKAGE
 
-PACKAGE_TAG="$(awk -F\" '/"version":/ {print $4}' package.json)"
+PACKAGE_VERSION="$(awk -F\" '/"version":/ {print $4}' package.json)"
 
 echo "THE PACKAGE IS $PACKAGE"
-echo "THE PACKAGE VERSION IS $PACKAGE_TAG"
+echo "THE PACKAGE VERSION IS $PACKAGE_VERSION"
 echo "THE PACKAGE DIST TAG IS $PACKAGE_DIST_TAG"
 
-IMAGE_TAG="pickmyload/test-$PACKAGE:$PACKAGE_TAG"
+IMAGE_TAG="pickmyload/test-$PACKAGE:$PACKAGE_VERSION"
 IMAGE_DIST_TAG="pickmyload/test-$PACKAGE:$PACKAGE_DIST_TAG"
 
 echo "THE IMAGE TAG IS $IMAGE_DIST_TAG"
@@ -37,7 +37,7 @@ if DOCKER_CLI_EXPERIMENTAL=enabled docker manifest inspect $IMAGE_TAG >/dev/null
 else
     
     echo "building docker image $IMAGE_TAG"
-    docker build --build-arg PACKAGE_TAG=$PACKAGE_TAG --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_TAG -t $IMAGE_DIST_TAG .
+    docker build --build-arg PACKAGE_VERSION=$PACKAGE_VERSION --build-arg NPM_TOKEN=$NPM_TOKEN -t $IMAGE_TAG -t $IMAGE_DIST_TAG .
 
     docker push $IMAGE_TAG
     docker push $IMAGE_DIST_TAG
