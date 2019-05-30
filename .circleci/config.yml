@@ -83,26 +83,6 @@ jobs:
       - run: cd ~/repo && ./deploy/deploy.sh << parameters.environment >>
 workflows:
   version: 2
-  run_tests:
-    jobs:
-      - checkout:
-          filters:
-            branches:
-              ignore:
-                - master
-                - next
-      - bootstrap:
-          requires:
-            - checkout
-      - lint:
-          requires:
-            - bootstrap
-      - unit-test:
-          requires:
-            - bootstrap
-      - e2e-test:
-          requires:
-            - bootstrap
   deploy_staging:
     jobs:
       - checkout:
@@ -112,38 +92,28 @@ workflows:
       - bootstrap:
           requires:
             - checkout
-      - publishNext:
+      - publishCanary:
           requires:
             - bootstrap
       - buildImage:
-          image: frontend
+          image: A
           requires:
-            - publishRelease
+            - publishCanary
       - buildImage:
-          image: backend
+          image: B
           requires:
-            - publishRelease
-      - buildImage:
-          image: documents
-          requires:
-            - publishRelease
-      - deploy:
-          environment: stage
-          requires:
-            - build-frontend-image
-            - build-backend-image
-            - build-documents-image
-  deploy_demo_and_prod:
-    jobs:
-      - checkout:
-          filters:
-            branches:
-              only: master
-      - deploy:
-          environment: demo
-          requires:
-            - checkout
-      - deploy:
-          environment: prod
-          requires:
-            - checkout
+            - publishCanary
+  # deploy_demo_and_prod:
+  #   jobs:
+  #     - checkout:
+  #         filters:
+  #           branches:
+  #             only: master
+  #     - deploy:
+  #         environment: demo
+  #         requires:
+  #           - checkout
+  #     - deploy:
+  #         environment: prod
+  #         requires:
+  #           - checkout
