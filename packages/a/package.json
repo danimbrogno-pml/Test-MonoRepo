@@ -15,7 +15,7 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "@freightbpi/testing-b": "^1.0.0"
+    "@freightbpi/testing-b": "^0.0.0"
   },
   "devDependencies": {
     "typescript": "^3.2.2"
