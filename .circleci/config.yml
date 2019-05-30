@@ -98,11 +98,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - add_ssh_keys:
-          fingerprints:
-            - "37:af:5d:dc:b6:c6:2f:02:70:ba:c7:68:19:a1:83:4a"
-            - "45:1c:46:90:e8:09:e3:24:23:03:96:26:14:59:94:24"
-            - "4d:b6:9f:cf:0f:9e:a3:bb:c0:1f:96:26:80:a9:ac:c4"
       - run: cd ~/repo && ./deploy/deploy.sh << parameters.environment >>
 workflows:
   version: 2
