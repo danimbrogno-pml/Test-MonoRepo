@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/danimbrogno-pml/Test-MonoRepo/packages/A.git"

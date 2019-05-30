@@ -9,6 +9,9 @@
     "url": "https://github.com/danimbrogno-pml/Test-MonoRepo.git"
   },
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p .",
