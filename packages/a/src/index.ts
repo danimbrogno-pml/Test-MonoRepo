@@ -1,3 +1,3 @@
 import foo from '@freightbpi/testing-b';
 
-console.log(`ITs: ${foo}`);
+console.log(`It is: ${foo}`);
