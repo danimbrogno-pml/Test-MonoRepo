@@ -58,7 +58,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
-      - run: "cd ~/repo && lerna publish --conventional-commits --conventional-prerelease --yes"
+      - run: "cd ~/repo && lerna publish --canary"
       - persist_to_workspace:
           root: ~/
           paths: 
@@ -70,14 +70,15 @@ jobs:
         description: "What image do you want to build?"
         type: enum
         enum: ["a", "b"]
-      packageVersion:
-        description: "What packange version do you want to build?"
+      isCanary:
+        description: "Do you want to do a canary build?"
         type: enum
-        enum: ["latest", "canary"]
+        default: "0"
+        enum: ["0", "1"]
     steps:
       - attach_workspace:
           at: ~/
-      - run: cd ~/repo && ./build/build-container.sh << parameters.image >> << parameters.packageVersion >>
+      - run: cd ~/repo && ./build/build-container.sh << parameters.image >> << parameters.isCanary >>
   deploy:
     executor: base
     parameters:
@@ -106,12 +107,12 @@ workflows:
             - bootstrap
       - buildImage:
           image: a
-          packageVersion: canary
+          isCanary: true
           requires:
             - publishCanary
       - buildImage:
           image: b
-          packageVersion: canary
+          isCanary: true
           requires:
             - publishCanary
   # deploy_demo_and_prod:
