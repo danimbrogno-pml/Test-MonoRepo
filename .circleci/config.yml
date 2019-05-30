@@ -52,7 +52,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
-      - run: "cd ~/repo && lerna publish --canary"
+      - run: "cd ~/repo && lerna publish --canary --yes"
       - persist_to_workspace:
           root: ~/
           paths: 
