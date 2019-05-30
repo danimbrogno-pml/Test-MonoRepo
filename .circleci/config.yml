@@ -100,7 +100,7 @@ jobs:
         fingerprints:
         - "c2:91:f8:cd:48:f0:ee:f6:9d:b3:2b:12:ca:df:5f:87"
     - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
-    - run: cd ~/repo && git checkout next && git merge master && git commit && git push
+    - run: cd ~/repo && git fetch origin && git checkout next && git merge master && git push
 workflows:
   version: 2
   deploy_staging:
