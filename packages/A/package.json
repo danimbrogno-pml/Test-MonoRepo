@@ -6,7 +6,7 @@
   "typings": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danimbrogno-pml/Test-MonoRepo/packages/A.git"
+    "url": "https://github.com/danimbrogno-pml/Test-MonoRepo.git"
   },
   "private": true,
   "scripts": {
@@ -14,7 +14,9 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "testing-b": "git://github.com/danimbrogno-pml/Test-MonoRepo/packages/B.git#v1.0.0",
+    "testing-b": "^1.0.0"
+  },
+  "peerDependencies": {
     "typescript": "^3.2.2"
   },
   "author": "",

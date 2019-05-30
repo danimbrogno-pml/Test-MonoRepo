@@ -16,6 +16,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "uuuid": "^3.5.1"
+  },
+  "peerDependencies": {
     "typescript": "^3.2.2"
   }
 }
