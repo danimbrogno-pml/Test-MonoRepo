@@ -115,17 +115,24 @@ workflows:
           isCanary: "1"
           requires:
             - publishCanary
-  # deploy_demo_and_prod:
-  #   jobs:
-  #     - checkout:
-  #         filters:
-  #           branches:
-  #             only: master
-  #     - deploy:
-  #         environment: demo
-  #         requires:
-  #           - checkout
-  #     - deploy:
-  #         environment: prod
-  #         requires:
-  #           - checkout
+  deploy_master:
+    jobs:
+      - checkout:
+          filters:
+            branches:
+              only: master
+      - bootstrap:
+          requires:
+            - checkout
+      - publishRelease:
+          requires:
+            - bootstrap
+      - buildImage:
+          image: a
+          requires:
+            - publishRelease
+      - buildImage:
+          image: b
+          requires:
+            - publishRelease
+      
