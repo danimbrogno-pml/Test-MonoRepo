@@ -138,8 +138,8 @@ workflows:
           requires:
             - bootstrap
       - updateNextBranch:
-        requires:
-          - publishRelease
+          requires:
+            - publishRelease
       - buildImage:
           image: a
           requires:
