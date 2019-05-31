@@ -48,6 +48,7 @@ jobs:
           - "c2:91:f8:cd:48:f0:ee:f6:9d:b3:2b:12:ca:df:5f:87"
       - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
       - run: "cd ~/repo && lerna publish --conventional-commits --yes --message=\"chore(release): publish release %v [skip ci]\""
+      - run: "cd ~/repo && git fetch origin && git checkout next && git merge master && git push"
       - persist_to_workspace:
           root: ~/
           paths: 
@@ -91,16 +92,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: cd ~/repo && ./deploy/deploy.sh << parameters.environment >>
-  updateNextBranch:
-    executor: base
-    steps:
-    - attach_workspace:
-        at: ~/
-    - add_ssh_keys:
-        fingerprints:
-        - "c2:91:f8:cd:48:f0:ee:f6:9d:b3:2b:12:ca:df:5f:87"
-    - run: git config --global user.email "dan@pmlfreight.tech" && git config --global user.name "CircleCI"
-    - run: cd ~/repo && git push origin --delete next && git checkout -b next && git push origin next
 workflows:
   version: 2
   deploy_staging:
@@ -137,9 +128,6 @@ workflows:
       - publishRelease:
           requires:
             - bootstrap
-      - updateNextBranch:
-          requires:
-            - publishRelease
       - buildImage:
           image: a
           requires:
